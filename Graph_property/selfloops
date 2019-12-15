@@ -1,0 +1,6 @@
+function s1 = selfloops(adj_matrix)
+%% 求网络的平均度
+ % 输入：邻接矩阵;
+ % 输出：自环数
+ s1 = sum(diag(adj_matrix)); 
+end
