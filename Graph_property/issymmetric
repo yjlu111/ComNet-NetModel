@@ -1,0 +1,9 @@
+function S = issymmetric(adj_matrix)
+%% 求网络的平均度
+ % 输入：邻接矩阵;
+ % 输出：0或1
+ S = false;
+ if adj_matrix == transpose(adj_matrix)
+     S = true;
+ end   
+end
