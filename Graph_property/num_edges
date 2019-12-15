@@ -1,0 +1,34 @@
+function m = num_edges(adj_matrix)
+%% 求网络的平均度
+ % 输入：邻接矩阵;
+ % 输出：边数
+  s1 = selfloops(adj_matrix); % 计算自环数目
+  if issymmetric(adj_matrix) && s1==0
+      m = sum(sum(adj_matrix))/2;
+      return 
+  elseif issymmetric(adj_matrix) && s1>0
+      s1 = selfloops(adj_matrix);
+      m = (sum(sum(adj_matrix))-s1)/2 + s1;
+      return
+  elseif not(issymmetric(adj_matrix))
+      m = sum(sum(adj_matrix));
+      return
+  end
+end
+
+function s1 = selfloops(adj_matrix)
+%% 求网络的平均度
+ % 输入：邻接矩阵;
+ % 输出：自环数
+ s1 = sum(diag(adj_matrix)); 
+end
+
+function S = issymmetric(adj_matrix)
+%% 求网络的平均度
+ % 输入：邻接矩阵;
+ % 输出：0或1
+ S = false;
+ if adj_matrix == transpose(adj_matrix)
+     S = true;
+ end   
+end
