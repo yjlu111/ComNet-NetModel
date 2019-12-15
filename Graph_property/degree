@@ -1,0 +1,29 @@
+function [deg_k, indeg_k, outdeg_k] = degree(adj_matrix)
+%% 计算图的度
+%  输入：邻接矩阵
+%  输出：节点度、入度和出度
+% exampe1:无向图
+% adj_matrix = [0 1 0;1 0 1;0 1 0], deg_k = 4
+% exampe2:有向图
+% adj_matrix = [0 1 0;0 0 1;1 0 0], indeg_k = 3, outdeg_k = 3
+% exampe3:自环图
+% adj_matrix = [1 1 0;0 1 1;1 0 0], deg_k = 8
+   indeg_k = sum(adj_matrix,2); % 对列求和，表示图节点的入度
+   outdeg_k = sum(adj_matrix,1); % 对行求和，表示图节点的出度 
+   if isdirected(adj_matrix)
+       deg_k = sum(indeg_k) + sum(outdeg_k);
+   else
+       deg_k = sum(sum(adj_matrix,1));
+   end
+end
+
+function S = isdirected(adj_matrix)
+%% 判断给定图是否为有向图
+%  输入：邻接矩阵
+%  输出：0或1
+ 
+   S = true
+   if adj_matrix == transpose(adj_matrix)
+       S = false
+   end
+end
