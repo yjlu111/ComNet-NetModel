@@ -1,0 +1,10 @@
+function S = isdirected(adj_matrix)
+%% 判断给定图是否为有向图
+%  输入：邻接矩阵
+%  输出：0或1
+ 
+   S = true;
+   if adj_matrix == transpose(adj_matrix)
+       S = false;
+   end
+end
