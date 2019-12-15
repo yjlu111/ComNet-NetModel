@@ -1,0 +1,6 @@
+function n = num_nodes(adj_matrix)
+%% 求网络的平均度
+ % 输入：邻接矩阵;
+ % 输出：节点数
+ n = length(adj_matrix); 
+end
