@@ -1,0 +1,34 @@
+function [Sum_EdgeDis, Edge_DisMatrix] = Undirected_Edge_Distribution()
+%% 功能：求网络实例的边分布(实验值)
+%% 描述：图的边数分布：P(i,j):网络中随机选取的一条边的两个端点度分别为j和k的概率。
+%                即伪网络中度为j的节点和度为k的节点之间存在的边数占网络总边数的比例；
+%% 输入： 邻接矩阵
+%% 输出： 边分布
+   load layer1_fp_10_1000_0.50_3.mat R
+     A = R{1,1};
+     N = size(A,1);     
+     Ver_Deg = [1:N;sum(A,1)];  % 节点度
+     Total_Edge_number = sum(Ver_Deg(2,:));  %网络总的度数
+     Sta_Tab = tabulate(Ver_Deg(2,:)); 
+     Row_Idx = Sta_Tab(:,2)>0;
+     Sta_Tab1 = Sta_Tab(Row_Idx,:);
+     Deg_Id = Sta_Tab1(:,1)';
+     Deg_Num = length(Deg_Id);
+     Edge_DisMatrix = zeros(Deg_Num,Deg_Num);
+     for i = 1:Deg_Num
+         Iog_ID1 = Ver_Deg(2,:)==Deg_Id(i);
+         v1 = Ver_Deg(1,Iog_ID1);
+         for j = 1:Deg_Num
+             Iog_ID2 = Ver_Deg(2,:)==Deg_Id(j);
+             v2 = Ver_Deg(1,Iog_ID2);
+             B = A(v1,v2);
+             Edge_Num = sum(sum(B));
+             Edge_DisMatrix(i,j) =  Edge_Num/Total_Edge_number;
+             Edge_DisMatrix(j,i) =  Edge_DisMatrix(i,j);
+         end
+     end
+     Exp_Edge = [[0,Deg_Id];[Deg_Id',Edge_DisMatrix]];
+     Sum_EdgeDis = sum(sum(Edge_DisMatrix));
+     save('Undirected_Edge_Distribution.mat','Edge_DisMatrix','Deg_Id','Sum_EdgeDis','Total_Edge_number','Exp_Edge')
+end
+
