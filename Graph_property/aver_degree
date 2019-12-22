@@ -1,0 +1,14 @@
+function aver_degreek = aver_degree( )
+%% 计算网络的平均度
+%  输入：邻接矩阵
+%  输出：网络的平均度
+  % A为网络科学导论page121页图4-1（b）
+   A = [0 1 1 0 0;1 0 0 1 0;1 0 0 0 1;0 1 0 0 0;0 0 1 0 0]; 
+   N = size(A,1)  % 网络节点数
+   deg_seq = [1:N; sum(A,1)] % 网络度序列：节点-度
+   % M = sum(deg_seq(2,:))/2;
+   % aver_degreek = 2*M/N;
+   aver_degreek = sum(deg_seq(2,:))/N;
+   
+end
+
