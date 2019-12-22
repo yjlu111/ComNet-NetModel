@@ -1,0 +1,22 @@
+function degree_dis = degree_distribution( )
+%% 计算网络的平均度
+%  输入：邻接矩阵
+%  输出：网络的平均度
+  % A为网络科学导论page121页图4-1（b）
+   A = [0 1 1 0 0;1 0 0 1 0;1 0 0 0 1;0 1 0 0 0;0 0 1 0 0]; 
+   deg_seq =  sum(A,1); % 网络度序列：节点-度
+   degree = tabulate(deg_seq);
+   sw = find(degree(:,3)>0);       %查找sw第三列中大于0的元素
+   degree_dis = [degree(sw,1),degree(sw,3)/100];
+   plot(degree_dis(:,1),degree_dis(:,2),'r-*');
+   % loglog(DegreeDisEx(:,1),DegreeDisEx(:,2),'r-v','markersize',5);
+%  semilogy(DegreeDisEx(:,1),DegreeDisEx(:,2),'r-v','markersize',5);
+   hold on;
+   xlabel('\it{k}');
+   ylabel('\it {P_k}');
+   
+end
+
+
+
+
