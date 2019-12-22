@@ -1,0 +1,34 @@
+function [Deg_Id,Edge_DisMatrix] = Edge_Distribution_layer1()
+%% 算法描述：网络实例的边分布
+% 图的边数分布：P(i,j):网络中随机选取的一条边的两个端点度分别为j和k的概率。
+%                即伪网络中度为j的节点和度为k的节点之间存在的边数占网络总边数的比例；
+%  输入：邻接矩阵
+%  输出：网络的边分布
+%% 参数意义：
+     A = [0 1 1 0 0;1 0 0 1 0;1 0 0 0 1;0 1 0 0 0;0 0 1 0 0]; 
+     N = size(A,1);   % 计算网络的节点数
+     Ver_Deg = [1:N;sum(A,1)]; % 节点-度
+     Total_Edge_number = sum(Ver_Deg(2,:));  % 边数的一半
+     Sta_Tab = tabulate(Ver_Deg(2,:)); % 该函数产生3列
+     Row_Idx = Sta_Tab(:,2)>0;  % 取度对应个数大于0的元素的行标
+     Sta_Tab1 = Sta_Tab(Row_Idx,:); %在Stab_Tab中取大于0的所有元素
+     Deg_Id = Sta_Tab1(:,1)';  % 取第一列元素的转置
+     Deg_Num = length(Deg_Id);
+     Edge_DisMatrix = zeros(Deg_Num,Deg_Num); % 边矩阵
+     for i = 1:Deg_Num
+         Iog_ID1 = Ver_Deg(2,:)==Deg_Id(i);  % 求度为i的节点数
+         v1 = Ver_Deg(1,Iog_ID1);  % 取度为k的标号
+         for j = i:Deg_Num
+             Iog_ID2 = Ver_Deg(2,:)==Deg_Id(j); % 找到度为deg_Id(j)的节点
+             v2 = Ver_Deg(1,Iog_ID2);
+             B = A(v1,v2); % 由节点集v1,v2构成的子图
+             Edge_Num = sum(sum(B)); % 子图的边
+             Edge_DisMatrix(i,j) =  Edge_Num/Total_Edge_number;
+             Edge_DisMatrix(j,i) =  Edge_DisMatrix(i,j);
+         end
+     end
+     Edge_DisMatrix = [Deg_Id'  Edge_DisMatrix];
+     Edge_DisMatrix = [0 Deg_Id;Edge_DisMatrix];
+     
+     
+end
