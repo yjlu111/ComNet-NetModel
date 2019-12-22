@@ -1,0 +1,12 @@
+function average_degreek = average_degree_with_porb( )
+%% 计算网络的平均度
+%  输入：邻接矩阵
+%  输出：利用网络的概率分布计算网络的平均度
+  % A为网络科学导论page121页图4-1（b）
+   A = [0 1 1 0 0;1 0 0 1 0;1 0 0 0 1;0 1 0 0 0;0 0 1 0 0]; 
+   deg_seq =  sum(A,1); % 网络度序列：节点-度
+   degree = tabulate(deg_seq);
+   sw = find(degree(:,3)>0);       %查找sw第三列中大于0的元素
+   degree_dis = [degree(sw,1),degree(sw,3)/100];
+   average_degreek = dot(degree_dis(:,1),degree_dis(:,2));
+end
